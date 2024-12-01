@@ -1,0 +1,14 @@
+services:
+  app:
+    image: test_de_role_pt1        # ใช้ Docker image ที่สร้างจาก Dockerfile
+    build:                        # สร้าง image จาก Dockerfile
+      context: .
+      dockerfile: Dockerfile
+    container_name: my_jupyter_app # ตั้งชื่อ container
+    ports:
+      - "8888:8888"               # แมปพอร์ต 8888 จาก host ไปยัง container
+    volumes:
+      - ./notebooks:/app/notebooks  # Mount โฟลเดอร์ notebooks
+      - ./src:/app/src              # Mount โฟลเดอร์ src
+      - ./ref:/app/data             # Mount โฟลเดอร์ ref ไปยัง /app/data
+    command: ["jupyter", "notebook", "--ip=0.0.0.0", "--port=8888", "--no-browser", "--allow-root", "--NotebookApp.token=''"]
